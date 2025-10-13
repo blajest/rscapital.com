@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS Capital - Professional Investment Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="images/RS LOGO.jpg">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --gold: #D9A657;
+            --black: #000000;
+            --white: #ffffff;
+            --dark-bg: #000000;
+            --card-bg: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            line-height: 1.6;
+            transition: margin-left 0.3s;
+            overflow-x: hidden;
+        }
+        
+        body.sidebar-open {
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            width: 95px;
+            height: 65px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        
+        .logo-text span {
+            color: var(--gold);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li a.active {
+            color: var(--gold);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .sidebar-logo-text span {
+            color: var(--gold);
+        }
+
+        .sidebar-close {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--white);
+            transition: color 0.3s;
+        }
+
+        .sidebar-close:hover {
+            color: var(--gold);
+        }
+
+        .sidebar-nav {
+            padding: 20px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s;
+            border-radius: 5px;
+            border: 1px solid transparent;
+        }
+
+        .sidebar-nav ul li a:hover {
+            color: var(--gold);
+            background-color: rgba(217, 166, 87, 0.1);
+            border-color: rgba(217, 166, 87, 0.3);
+        }
+
+        .sidebar-nav ul li a.active {
+            color: var(--gold);
+            background-color: rgba(217, 166, 87, 0.15);
+            border-color: var(--gold);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .hero h1 span {
+            color: var(--gold);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #ddd;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 2px solid var(--gold);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(217, 166, 87, 0.3);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 50px 0;
+            background-color: transparent;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+        
+        .section-title h2 span {
+            color: var(--gold);
+        }
+        
+        .section-title p {
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Plans Section */
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .plan-card {
+            background-color: rgba(26, 26, 26, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(217, 166, 87, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            backdrop-filter: blur(5px);
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(217, 166, 87, 0.2);
+            border-color: var(--gold);
+        }
+        
+        .plan-header {
+            margin-bottom: 25px;
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        
+        .plan-icon {
+            font-size: 40px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-button {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 16px;
+            margin-top: auto;
+        }
+        
+        .plan-button:hover {
+            background-color: #c8953f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(217, 166, 87, 0.3);
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-size: 20px;
+        }
+        
+        .contact-text h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--white);
+        }
+        
+        .contact-text p {
+            color: #ccc;
+        }
+        
+        .contact-link {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .contact-link:hover {
+            color: #c8953f;
+            text-decoration: underline;
+        }
+        
+        .contact-form {
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: var(--white);
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px 0 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links li a:hover {
+            color: var(--gold);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Page Content */
+        .page-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .page-content.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .stagger-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: rgba(26, 26, 26, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--gold);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+        
+        .modal p {
+            margin-bottom: 20px;
+            color: #ccc;
+            white-space: pre-line;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .modal-close {
+            background-color: #666;
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
+            background-color: #888;
+        }
+        
+        .modal-contact {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .modal-contact:hover {
+            background-color: #c8953f;
+        }
+        /* Add this to your existing CSS */
+.modal-content {
+    max-width: 430px !important; /* Limit modal width */
+    width: 95% !important; /* Make it responsive */
+}
+
+.modal p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+        
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--gold);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            background-color: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                text-align: left;
+                justify-content: space-between;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: static;
+            }
+            
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            section {
+                padding: 30px 0;
+            }
+            
+            .section-title {
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <div style="width: 105px; height:70px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #000; font-weight:bolder;">
+                        <img src="images/RS LOGO.jpg" alt="RS Capital Logo">
+                    </div>
+                </div>
+                <div class="logo-text">RS <span>Capital</span></div>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                    <li><a href="#" class="nav-link" data-page="plans">Investment Plans</a></li>
+                    <li><a href="#" class="nav-link" data-page="vip">VIP Plan</a></li>
+                    <li><a href="#" class="nav-link" data-page="masterclass">Master Class</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sidebar Mobile Navigation -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="logo-img" style="width: 45px; height: 40px; margin-right: 10px; ">
+                    <img src="images/RS LOGO.jpg" alt="RS Capital Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="sidebar-logo-text">RS <span>Capital</span></div>
+            </div>
+            <div class="sidebar-close" id="sidebar-close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="sidebar-nav">
+            <ul>
+                <li><a href="#" class="sidebar-link active" data-page="home">
+                    <i class="fas fa-home" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    Home
+                </a></li>
+                <li><a href="#" class="sidebar-link" data-page="about">
+                    <i class="fas fa-info-circle" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    About
+                </a></li>
+                <li><a href="#" class="sidebar-link" data-page="plans">
+                    <i class="fas fa-chart-line" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    Investment Plans
+                </a></li>
+                <li><a href="#" class="sidebar-link" data-page="vip">
+                    <i class="fas fa-crown" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    VIP Plan
+                </a></li>
+                <li><a href="#" class="sidebar-link" data-page="masterclass">
+                    <i class="fas fa-graduation-cap" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    Master Class
+                </a></li>
+                <li><a href="#" class="sidebar-link" data-page="contact">
+                    <i class="fas fa-envelope" style="margin-right: 10px; width: 20px; text-align: center;"></i>
+                    Contact Us
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <section id="home" class="page-content active">
+        <div class="hero">
+            <div class="container">
+                <h1 class="fade-in">GROWING YOUR PORTFOLIO <span>ONE TRADE AT A TIME</span></h1>
+                <p class="fade-in">PROFESSIONAL TRADER & FUND MANAGER, TRUST IN US.</p>
+                <p class="fade-in">✅ Trade With The EMPEROR! We'll major on: 🏅XAUUSD 🏅BTCUSD</p>
+                <a href="#" class="cta-button fade-in" id="view-plans-btn">View Investment Plans</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Why Choose <span>RS Capital</span></h2>
+                <p>We provide transparent, secure, and profitable investment opportunities</p>
+            </div>
+            
+            <div class="plans-container">
+                <div class="plan-card stagger-item">
+                    <div class="plan-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Investments</h3>
+                    <p>Your funds are protected with our advanced security measures and transparent processes.</p>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Proven Returns</h3>
+                    <p>Our investment strategies have consistently delivered profitable returns to our clients.</p>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our dedicated support team is available around the clock to assist you with any queries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page-content">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>About <span>RS Capital</span></h2>
+                <p>Learn more about our mission and investment philosophy</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h3>Professional Trading & Fund Management</h3>
+                    <p>RS Capital is an online investment platform that allows users to invest money in various financial plans and earn returns based on their chosen package. We're designed to present transparent investment options with clear details about expected earnings and duration.</p>
+                    <p>Our mission is to make investing simple, elegant, and trustworthy, while providing users with easy access to contact our team and learn about available payment methods.</p>
+                    <p>With expertise in XAUUSD (Gold) and BTCUSD (Bitcoin) trading, we employ sophisticated strategies to maximize returns while managing risk effectively.</p>
+                    <p>Trust in our experience and let us help grow your investment portfolio with our carefully crafted investment plans.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Investment Strategy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Plans Page -->
+    <section id="plans" class="page-content">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Investment <span>Plans</span></h2>
+                <p>Choose the plan that best fits your investment goals</p>
+            </div>
+            
+            <div class="plans-container">
+                <!-- 24-Hour Plan -->
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="plan-name">24-Hour Plan</h3>
+                        <p>Fast returns in just one day</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest £500 → Earn £4,000</li>
+                        <li>Invest £600 → Earn £5,500</li>
+                        <li>Invest £700 → Earn £6,500</li>
+                        <li>Invest £800 → Earn £7,600</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="24-Hour Plan">Contact Admin</button>
+                </div>
+                
+                <!-- 72-Hour Plan -->
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <h3 class="plan-name">72-Hour Plan</h3>
+                        <p>Medium-term investment</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest £1,000 → Earn £8,500</li>
+                        <li>Invest £1,500 → Earn £10,500</li>
+                        <li>Invest £2,000 → Earn £12,000</li>
+                        <li>Invest £2,500 → Earn £14,500</li>
+                        <li>Invest £3,000 → Earn £16,000</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="72-Hour Plan">Contact Admin</button>
+                </div>
+                
+                <!-- 1-Week Premium Plan -->
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="plan-name">1-Week Premium Plan</h3>
+                        <p>Maximum returns in one week</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest £4,000 → Earn £18,000</li>
+                        <li>Invest £5,000 → Earn £20,000</li>
+                        <li>Invest £6,000 → Earn £24,000</li>
+                        <li>Invest £7,000 → Earn £28,000</li>
+                        <li>Invest £8,000 → Earn £30,000</li>
+                        <li>Invest £9,000 → Earn £32,000</li>
+                        <li>Invest £10,000 → Earn £36,000</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="1-Week Premium Plan">Contact Admin</button>
+                </div>
+            </div>
+            
+            <div class="section-title fade-in" style="margin-top: 30px;">
+                <h2>Payment <span>Methods</span></h2>
+                <p>We accept various payment methods for your convenience</p>
+            </div>
+            
+            <div class="plans-container">
+                <div class="plan-card stagger-item">
+                    <div class="plan-icon">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <h3>Bitcoin (BTC)</h3>
+                    <p>Secure cryptocurrency payments</p>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>USDT</h3>
+                    <p>Stablecoin for consistent value</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIP Plan Page -->
+    <section id="vip" class="page-content">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>VIP <span>Plan</span></h2>
+                <p>Exclusive premium investment opportunities for serious investors</p>
+            </div>
+            
+            <div class="plans-container">
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="plan-name">Monthly VIP Plan</h3>
+                        <p>Premium monthly investment</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest $200 → Monthly Plan</li>
+                        <li>Priority customer support</li>
+                        <li>Personal account manager</li>
+                        <li>Weekly portfolio analysis</li>
+                        <li>Exclusive market insights</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="Monthly VIP Plan">Contact Admin</button>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="plan-name">4-Month VIP Plan</h3>
+                        <p>Extended premium investment</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest $500 → 4 Months Plan</li>
+                        <li>All Monthly VIP benefits</li>
+                        <li>Advanced trading strategies</li>
+                        <li>Risk management consultation</li>
+                        <li>Higher return potential</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="4-Month VIP Plan">Contact Admin</button>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 class="plan-name">Lifetime VIP Plan</h3>
+                        <p>Ultimate investment experience</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Invest $1000 → Lifetime Plan</li>
+                        <li>All 4-Month VIP benefits</li>
+                        <li>Lifetime account access</li>
+                        <li>Priority on new opportunities</li>
+                        <li>Customized investment strategies</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="Lifetime VIP Plan">Contact Admin</button>
+                </div>
+            </div>
+            
+            <div class="about-content" style="margin-top: 50px;">
+                <div class="about-text fade-in">
+                    <h3>Why Choose Our VIP Plan?</h3>
+                    <p>Our VIP Investment Plan is designed for serious investors who want premium service and exclusive opportunities. With personalized account management and advanced trading strategies, our VIP clients receive the highest level of attention and support.</p>
+                    <p>As a VIP member, you'll benefit from our most sophisticated investment approaches, regular portfolio analysis, and priority access to new investment opportunities. Our team of expert traders works closely with VIP clients to maximize returns while managing risk effectively.</p>
+                    <p>Join our exclusive VIP program today and experience the difference that premium service and expert guidance can make to your investment portfolio.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="VIP Investment">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Class Page -->
+    <section id="masterclass" class="page-content">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Trading <span>Master Class</span></h2>
+                <p>Learn professional trading strategies from our experts</p>
+            </div>
+            
+            <div class="plans-container">
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="plan-name">2-Month Master Class</h3>
+                        <p>Comprehensive trading education</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>2 MONTHS for $300</li>
+                        <li>Basic to intermediate trading</li>
+                        <li>Technical analysis fundamentals</li>
+                        <li>Risk management strategies</li>
+                        <li>Live trading sessions</li>
+                        <li>Weekly Q&A with experts</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="2-Month Master Class">Enroll Now</button>
+                </div>
+                
+                <div class="plan-card stagger-item">
+                    <div class="plan-header">
+                        <div class="plan-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3 class="plan-name">3-Month Master Class</h3>
+                        <p>Advanced trading mastery</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li>3 MONTHS for $500</li>
+                        <li>All 2-month course content</li>
+                        <li>Advanced technical analysis</li>
+                        <li>Algorithmic trading basics</li>
+                        <li>Portfolio management</li>
+                        <li>One-on-one mentorship</li>
+                    </ul>
+                    <button class="plan-button contact-admin" data-plan="3-Month Master Class">Enroll Now</button>
+                </div>
+            </div>
+            
+            <div class="about-content" style="margin-top: 50px;">
+                <div class="about-text fade-in">
+                    <h3>What You'll Learn</h3>
+                    <p>Our Trading Master Class is designed to transform beginners into confident traders and help experienced traders refine their strategies. Learn from our team of professional traders who have years of experience in XAUUSD (Gold) and BTCUSD (Bitcoin) markets.</p>
+                    <p>In our comprehensive curriculum, you'll master technical analysis, risk management, trading psychology, and advanced strategies that we use in our own trading. We provide practical, real-world knowledge that you can apply immediately to your trading activities.</p>
+                    <p>Whether you're looking to trade as a hobby or pursue trading as a serious profession, our Master Class will give you the skills and confidence needed to navigate the financial markets successfully.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Trading Education">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page-content">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Contact <span>Us</span></h2>
+                <p>Get in touch with our team for any inquiries</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item stagger-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Our Location</h3>
+                            <p>Dubai, UAE</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item stagger-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Telegram</h3>
+                            <p><a href="https://t.me/RSCAPITALASSISTANT" class="contact-link" target="_blank">@RSCAPITALASSISTANT</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item stagger-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Email Us</h3>
+                            <p><a href="mailto:rscapital54@gmail.com" class="contact-link">rscapital54@gmail.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item stagger-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Working Hours</h3>
+                            <p>24/7 Customer Support</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form fade-in">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="Enter your message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="plan-button" style="width: 100%;">
+                            <span id="submit-text">Send Message</span>
+                            <div class="spinner" id="submit-spinner"></div>
+                        </button>
+                        
+                        <div class="success-message" id="success-message">
+                            <i class="fas fa-check-circle"></i> Your message has been sent successfully! We'll get back to you soon.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column fade-in">
+                    <h3>RS Capital</h3>
+                    <p>Professional trading and investment platform helping you grow your portfolio with secure and profitable plans.</p>
+                    <div class="social-links">
+                        <a href="https://t.me/RSCAPITALASSISTANT" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column fade-in">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                        <li><a href="#" class="nav-link" data-page="plans">Investment Plans</a></li>
+                        <li><a href="#" class="nav-link" data-page="vip">VIP Plan</a></li>
+                        <li><a href="#" class="nav-link" data-page="masterclass">Master Class</a></li>
+                        <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column fade-in">
+                    <h3>Investment Plans</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="nav-link" data-page="plans">24-Hour Plan</a></li>
+                        <li><a href="#" class="nav-link" data-page="plans">72-Hour Plan</a></li>
+                        <li><a href="#" class="nav-link" data-page="plans">1-Week Premium Plan</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column fade-in">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Dubai, UAE</li>
+                        <li><a href="https://t.me/RSCAPITALASSISTANT" target="_blank" style="color: #aaa; text-decoration: none;"><i class="fab fa-telegram"></i> @RSCAPITALASSISTANT</a></li>
+                        <li><a href="mailto:rscapital54@gmail.com" style="color: #aaa; text-decoration: none;"><i class="fas fa-envelope"></i> rscapital54@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 RS Capital. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <h3 id="modal-title">Interested in 72-Hour Plan</h3>
+            <p id="modal-message">To proceed with the 72-Hour Plan, please contact our admin on Telegram: @RSCAPITALASSISTANT We accept payments via USDT and BTC.</p>
+            <div class="modal-buttons">
+                <button class="modal-close" id="modal-close">Close</button>
+                <a href="https://t.me/RSCAPITALASSISTANT" target="_blank" class="modal-contact">Contact Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: "#d9a657"
+                    },
+                    shape: {
+                        type: "circle",
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        }
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 2,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#d9a657",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "push"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 1
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+            
+            // Navigation functionality
+            const navLinks = document.querySelectorAll('.nav-link, .sidebar-link');
+            const pages = document.querySelectorAll('.page-content');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const contactForm = document.getElementById('contactForm');
+            const contactModal = document.getElementById('contactModal');
+            const modalClose = document.getElementById('modal-close');
+            const submitText = document.getElementById('submit-text');
+            const submitSpinner = document.getElementById('submit-spinner');
+            const viewPlansBtn = document.getElementById('view-plans-btn');
+            const successMessage = document.getElementById('success-message');
+            
+            // Navigation click handler
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding page with fade transition
+                    const pageId = this.getAttribute('data-page');
+                    const targetPage = document.getElementById(pageId);
+                    
+                    // Fade out current page, then fade in new page
+                    const activePage = document.querySelector('.page-content.active');
+                    if (activePage) {
+                        activePage.style.opacity = '0';
+                        setTimeout(() => {
+                            activePage.classList.remove('active');
+                            targetPage.classList.add('active');
+                            setTimeout(() => {
+                                targetPage.style.opacity = '1';
+                                // Initialize animations for the new page
+                                initScrollAnimations();
+                            }, 50);
+                        }, 300);
+                    } else {
+                        targetPage.classList.add('active');
+                        setTimeout(() => {
+                            targetPage.style.opacity = '1';
+                            // Initialize animations for the new page
+                            initScrollAnimations();
+                        }, 50);
+                    }
+                    
+                    // Scroll to top of the page
+                    window.scrollTo(0, 0);
+                    
+                    // Close sidebar if open
+                    if (sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        sidebarOverlay.classList.remove('active');
+                        document.body.classList.remove('sidebar-open');
+                    }
+                });
+            });
+            
+            // View Plans button handler
+            if (viewPlansBtn) {
+                viewPlansBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(page => page.classList.remove('active'));
+                    
+                    // Add active class to plans link
+                    document.querySelector('[data-page="plans"]').classList.add('active');
+                    
+                    // Show plans page with fade transition
+                    const plansPage = document.getElementById('plans');
+                    const activePage = document.querySelector('.page-content.active');
+                    
+                    if (activePage) {
+                        activePage.style.opacity = '0';
+                        setTimeout(() => {
+                            activePage.classList.remove('active');
+                            plansPage.classList.add('active');
+                            setTimeout(() => {
+                                plansPage.style.opacity = '1';
+                                // Initialize animations for the new page
+                                initScrollAnimations();
+                            }, 50);
+                        }, 300);
+                    } else {
+                        plansPage.classList.add('active');
+                        setTimeout(() => {
+                            plansPage.style.opacity = '1';
+                            // Initialize animations for the new page
+                            initScrollAnimations();
+                        }, 50);
+                    }
+                    
+                    // Scroll to top of the page
+                    window.scrollTo(0, 0);
+                    
+                    // Close sidebar if open
+                    if (sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        sidebarOverlay.classList.remove('active');
+                        document.body.classList.remove('sidebar-open');
+                    }
+                });
+            }
+            
+            // Mobile menu toggle
+            mobileMenu.addEventListener('click', function() {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('active');
+                document.body.classList.add('sidebar-open');
+            });
+            
+            // Sidebar close
+            sidebarClose.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            });
+            
+            // Sidebar overlay close
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
+            });
+            
+            // Updated Contact Admin buttons section
+const contactButtons = document.querySelectorAll('.contact-admin');
+contactButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const plan = this.getAttribute('data-plan');
+        showModalWithCopy(plan);
+    });
+});
+
+// New showModalWithCopy function with copy button
+function showModalWithCopy(planName) {
+    const messageText = `Hello! I'm interested in the ${planName} at RS Capital and would like more details.`;
+    
+    document.getElementById('modal-title').textContent = `Interested in ${planName}`;
+    
+    const modalMessage = document.getElementById('modal-message');
+    modalMessage.innerHTML = `
+        <div style="text-align: left;">
+            <strong>Plan:</strong> ${planName}<br><br>
+            <strong>Message to send:</strong>
+            <div style="background: rgba(217, 166, 87, 0.2); padding: 12px; border-radius: 5px; margin: 10px 0; border-left: 3px solid var(--gold); font-size: 14px; line-height: 1.4;">
+                "${messageText}"
+            </div>
+            <button id="copy-message-btn" style="background: var(--gold); color: var(--black); border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight: 600; width: 100%; transition: all 0.3s;">
+                <i class="fas fa-copy"></i> Copy Message to Clipboard
+            </button>
+            
+        </div>
+    `;
+    
+    // Add copy functionality
+    const copyBtn = document.getElementById('copy-message-btn');
+    copyBtn.addEventListener('click', function() {
+        navigator.clipboard.writeText(messageText).then(() => {
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Copied Successfully!';
+            this.style.background = '#22c55e';
+            this.style.color = 'white';
+            
+            setTimeout(() => {
+                this.innerHTML = originalHTML;
+                this.style.background = 'var(--gold)';
+                this.style.color = 'var(--black)';
+            }, 2000);
+        }).catch(() => {
+            // Fallback for browsers that don't support clipboard API
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = messageText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            this.style.background = '#22c55e';
+            this.style.color = 'white';
+            
+            setTimeout(() => {
+                this.innerHTML = originalHTML;
+                this.style.background = 'var(--gold)';
+                this.style.color = 'var(--black)';
+            }, 2000);
+        });
+    });
+    
+    // Update the Contact Admin button
+    const telegramLink = `https://t.me/RSCAPITALASSISTANT`;
+    const contactBtn = document.querySelector('.modal-contact');
+    contactBtn.href = telegramLink;
+    contactBtn.target = '_blank';
+    contactBtn.textContent = 'Contact Admin';
+    
+    contactModal.style.display = 'flex';
+}
+
+// Remove the old showModal function and replace it with this new one
+            
+            // Contact form submission
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show loading state
+                    submitText.style.display = 'none';
+                    submitSpinner.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    
+                    // Get form data
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Create email content
+                    const emailBody = `
+                        New Contact Form Submission from RS Capital Website:
+                        
+                        Name: ${name}
+                        Email: ${email}
+                        Subject: ${subject}
+                        Message: ${message}
+                        
+                        This message was sent from the RS Capital contact form.
+                    `;
+                    
+                    // Create mailto link (this will open user's email client)
+                    const mailtoLink = `mailto:rscapital54@gmail.com?subject=RS Capital Contact: ${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message after a short delay
+                    setTimeout(function() {
+                        // Reset button state
+                        submitText.style.display = 'inline';
+                        submitSpinner.style.display = 'none';
+                        
+                        // Show success message
+                        successMessage.style.display = 'block';
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Hide success message after 5 seconds
+                        setTimeout(function() {
+                            successMessage.style.display = 'none';
+                        }, 5000);
+                    }, 1000);
+                });
+            }
+            
+            // Modal functionality
+            function showModal(title, message) {
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-message').textContent = message;
+                contactModal.style.display = 'flex';
+            }
+            
+            modalClose.addEventListener('click', function() {
+                contactModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === contactModal) {
+                    contactModal.style.display = 'none';
+                }
+            });
+            
+            // Scroll animation functionality
+            function initScrollAnimations() {
+                // Reset all animation elements
+                const fadeElements = document.querySelectorAll('.fade-in, .stagger-item');
+                fadeElements.forEach(el => {
+                    el.classList.remove('visible');
+                });
+                
+                // Create intersection observer for scroll animations
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // For staggered items, add delay based on index
+                            if (entry.target.classList.contains('stagger-item')) {
+                                const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
+                                setTimeout(() => {
+                                    entry.target.classList.add('visible');
+                                }, index * 100);
+                            } else {
+                                entry.target.classList.add('visible');
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                // Observe all elements with animation classes
+                fadeElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+            
+            // Initialize scroll animations on page load
+            window.addEventListener('load', function() {
+                initScrollAnimations();
+            });
+        });
+    </script>
+</body>
+</html>
